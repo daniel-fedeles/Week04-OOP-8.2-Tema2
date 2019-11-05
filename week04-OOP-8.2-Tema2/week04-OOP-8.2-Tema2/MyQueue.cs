@@ -5,16 +5,30 @@ namespace week04_OOP_8._2_Tema2
 {
     public class MyQueue<T>
     {
-        private List<T> MyListQueue { get; }
-        private LinkedList<T> LinkedList { get; }
+        /// <summary>
+        /// The head
+        /// </summary>
+        private int head;
 
+        /// <summary>
+        /// The tail
+        /// </summary>
+        private int tail;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyQueue{T}"/> class.
+        /// </summary>
         public MyQueue()
         {
-            LinkedList = new LinkedList<T>();
             MyListQueue = new List<T>();
+            head = 0;
+            tail = MyListQueue.Count;
 
         }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MyQueue{T}"/> class.
+        /// </summary>
+        /// <param name="capacity">The capacity.</param>
         public MyQueue(int capacity)
         {
             if (capacity < 0)
@@ -23,36 +37,35 @@ namespace week04_OOP_8._2_Tema2
             }
 
             this.MyListQueue = new List<T>(capacity);
+            head = 0;
+            tail = MyListQueue.Count;
 
         }
 
-        public MyQueue(IEnumerable<T> collection)
-        {
-            if (collection == null)
-            {
-                Console.WriteLine("Collection is null");
-            }
-            this.MyListQueue = new List<T>(4);
+        /// <summary>
+        /// Gets my list queue.
+        /// </summary>
+        /// <value>
+        /// My list queue.
+        /// </value>
+        private List<T> MyListQueue { get; }
 
-            foreach (T obj in collection)
-            {
-                this.Enqueue(obj);
-            }
+        /// <summary>
+        /// Counts this instance.
+        /// </summary>
+        /// <returns></returns>
+        public int Count() => MyListQueue.Count;
 
-        }
-
-        public int Count()
-        {
-            return MyListQueue.Count;
-        }
-
-        public void Clear()
-        {
-            MyListQueue.Clear();
-            LinkedList.Clear();
-        }
+        /// <summary>
+        /// Clears this instance.
+        /// </summary>
+        public void Clear() => MyListQueue.Clear();
 
 
+        /// <summary>
+        /// Enqueues the specified generic.
+        /// </summary>
+        /// <param name="generic">The generic.</param>
         public void Enqueue(T generic)
         {
             MyListQueue.Reverse();
@@ -62,55 +75,67 @@ namespace week04_OOP_8._2_Tema2
             }
             else
             {
-                Console.WriteLine("the value cannot be null");
+                Console.WriteLine($"Insert element {generic.GetType()}, null is not valid");
             }
             MyListQueue.Reverse();
         }
 
 
+        /// <summary>
+        /// Dequeues this instance.
+        /// </summary>
+        /// <returns></returns>
         public T Dequeue()
         {
-            //            MyListQueue.Reverse();
-            T generic = MyListQueue[MyListQueue.Count - 1];
+            T generic = MyListQueue[head];
 
             MyListQueue.Remove(generic);
-            //            MyListQueue.Reverse();
+
             return generic;
 
         }
 
-        public bool Contain(T generic)
+        /// <summary>
+        /// Contains the specified generic.
+        /// </summary>
+        /// <param name="generic">The generic.</param>
+        /// <returns></returns>
+        public bool Contains(T generic)
         {
-            if (generic == null) Console.WriteLine("the element is null");
+            if (generic == null) Console.WriteLine($"Insert element {generic.GetType()}, null is not valid");
             return MyListQueue.Contains(generic);
         }
 
-        public T Peek()
-        {
-            return MyListQueue[0];
-        }
+        /// <summary>
+        /// Peeks this instance.
+        /// </summary>
+        /// <returns></returns>
+        public T Peek() => MyListQueue[head];
 
-        public T[] ToArray()
-        {
-            return MyListQueue.ToArray();
-        }
+        /// <summary>
+        /// Converts to array.
+        /// </summary>
+        /// <returns></returns>
+        public T[] ToArray() => MyListQueue.ToArray();
 
-        public void TrimExcess()
-        {
-            MyListQueue.TrimExcess();
-        }
+        /// <summary>
+        /// Trims the excess.
+        /// </summary>
+        public void TrimExcess() => MyListQueue.TrimExcess();
 
 
+        /// <summary>
+        /// Gets or sets the <see cref="T"/> with the specified i.
+        /// </summary>
+        /// <value>
+        /// The <see cref="T"/>.
+        /// </value>
+        /// <param name="i">The i.</param>
+        /// <returns></returns>
         public T this[int i]
         {
-            get
-            {
-                return MyListQueue[i];
-            }
-            set
-            {
-                MyListQueue[i] = value;
-            }
+            get => MyListQueue[i];
+            set => MyListQueue[i] = value;
         }
     }
 }
